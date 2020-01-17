@@ -1,0 +1,19 @@
+#服务器的配置
+servicename: 服务器
+port: :8777
+#数据库的配置
+db:
+- dbid: 10001
+  type: master
+  port: 3306
+  host: 127.0.0.1
+  user: root
+  pwd: 123456
+
+- dbid: 10002
+  type: query
+  port: 3306
+  host: 127.0.0.1
+  user: root
+  pwd: 123456
+  
