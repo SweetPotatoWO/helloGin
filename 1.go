@@ -6,7 +6,6 @@ import (
 )
 
 func main() {
-
 	user := User{
 		Name: "zhangsan",
 	}
@@ -19,7 +18,6 @@ func main() {
 	// m 类型为  reflect.Value
 	m, _ := reflect.TypeOf(user).MethodByName(funcName)
 	m.Func.Call(v)
-
 }
 
 type User struct {

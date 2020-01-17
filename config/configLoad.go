@@ -8,12 +8,14 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
+//Myconf ...
 type Myconf struct {
 	Servicename string
 	Port        string
 	Db          []Device
 }
 
+//Device ...
 type Device struct {
 	Dbid string
 	Type string
@@ -23,13 +25,13 @@ type Device struct {
 	Pwd  string
 }
 
-var main_config_path = "/root/helloGin/config/config.yml"
-var constant_config_path = "/root/helloGin/config/constant.json"
+var main_config_path = "/root/git/helloGin/config/config.yml"
+var constant_config_path = "/root/git/helloGin/config/constant.json"
 
-//全局变量
+//MYCONFIG  全局变量
 var MYCONFIG Myconf
 
-//赋值一个任意类型的全局变量
+//MYCONSTANT 赋值一个任意类型的全局变量
 var MYCONSTANT interface{}
 
 func init() {
