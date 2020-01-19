@@ -40,7 +40,8 @@ func (cInit *InitController) Run(c *gin.Engine, controllerFnCode string) {
 	var ControllerName = controllerAndFnName["controller"]
 	var RuqFnName = controllerAndFnName["fnname"]
 
-	//
+	//反射映射实例话对应的类
+
 	cInit.initAfterFn(param)
 }
 

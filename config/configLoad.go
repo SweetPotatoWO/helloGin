@@ -13,6 +13,7 @@ type Myconf struct {
 	Servicename string
 	Port        string
 	Db          []Device
+	Module      []string
 }
 
 //Device ...

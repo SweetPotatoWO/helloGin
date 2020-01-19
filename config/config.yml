@@ -16,4 +16,8 @@ db:
   host: 127.0.0.1
   user: root
   pwd: 123456
+  #注册控制器列表 
+module:
+  - 'User'
+  - 'Index'
   
