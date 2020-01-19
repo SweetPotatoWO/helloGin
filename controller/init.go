@@ -1,7 +1,9 @@
 package controller
 
 import (
+	"errors"
 	"log"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 )
@@ -45,8 +47,18 @@ func (cInit *InitController) Run(c *gin.Engine, controllerFnCode string) {
 //返回对应的map 和 错误 也就是获取到控制器的名字和对应调用的方法名字
 //格式 为 User/addUser
 func (cInit *InitController) splitControllerAndFnName(controllerFnCode string) (map[string]string, error) {
-
-	return nil, nil
+	if controllerFnCode == "" {
+		return nil, errors.New("没有传递对应的控制器和方法代号")
+	}
+	strArr := strings.Split(controllerFnCode, "/")
+	if len(strArr) != 2 {
+		return nil, errors.New("传递的代码节点有问误,请用将控制器和方法隔开")
+	}
+	var controllerAndFnName map[string]string
+	controllerAndFnName = make(map[string]string)
+	controllerAndFnName["controller"] = strArr[0]
+	controllerAndFnName["fnname"] = strArr[1]
+	return controllerAndFnName, nil
 }
 
 //在调用某个子类之前会提前调用 可在这里写一些通用的逻辑
