@@ -2,11 +2,14 @@ package main
 
 import (
 	"fmt"
-	"strings"
 )
 
 func main() {
-	var str = ""
-	strArr := strings.Split(str, "/")
-	fmt.Println(strArr)
+
+	fmt.Println((*User)(nil)) //新建一个User对象 并初始化为nil
+	var a User
+	fmt.Println(a)
+}
+
+type User struct {
 }
