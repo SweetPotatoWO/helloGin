@@ -1,11 +1,8 @@
 package controller
 
-import (
-	"fmt"
-)
-
 func init() {
-	registerType((*User)(nil)) //新建一个对象并初始化为nil
+	var a *User
+	RegisterType(a) //新建一个对象并初始化为nil
 }
 
 //User ...
@@ -14,7 +11,5 @@ type User struct{}
 
 //Hello ...
 func (u User) Hello(param interface{}) string {
-	fmt.Println(param)
-	fmt.Println("你好啊啊")
-	return "dafafadfadf"
+	return ReturnJsonSuccess("返回成功", "dafda")
 }

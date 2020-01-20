@@ -1,18 +1,25 @@
 package route
 
-import (
-	"helloGin/controller"
-
-	"github.com/gin-gonic/gin"
-)
-
 func init() {
-	SetUserRoute(GetGinIns()) //设置路由
+	SetUserRoute(GetGinIns(), GetURLRoute()) //设置路由
 }
 
-//SetUserRoute 在这里设置整个User模块的路由
-//新建一个则填写一个
-func SetUserRoute(r *gin.Engine) *gin.Engine {
-	r.GET("/", controller.Run)
-	return r
+//GetURLRoute 这里填写Url全部注册路径
+func GetURLRoute() map[string]URLRouteOne {
+	var ret map[string]URLRouteOne
+	ret = make(map[string]URLRouteOne)
+
+	ret["/"] = URLRouteOne{
+		URL:  "/",
+		Type: "get",
+		Path: "User/Hello",
+	}
+
+	ret["/hello"] = URLRouteOne{
+		URL:  "/hello",
+		Type: "post",
+		Path: "User/HelloPost",
+	}
+
+	return ret
 }
