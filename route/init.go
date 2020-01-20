@@ -122,7 +122,7 @@ func Run(c *gin.Context) {
 	if !isFlag {
 		log.Fatalln("当前传递的控制器,不在注册列表中")
 	}
-	//6 根据获取到控制器名字获取到对应类的实例
+	//7 根据获取到控制器名字获取到对应类的实例
 	initStruct, ok := controller.NewStruct(ControllerName) //返回核心的控制器
 	if !ok {
 		log.Fatalln("实例化核心的控制器失败")
@@ -130,12 +130,14 @@ func Run(c *gin.Context) {
 
 	inputs := make([]reflect.Value, 1) //参数
 	inputs[0] = reflect.ValueOf(param) //输入对应的参数
-	//6 根据类和方法 调用并执行
+	//8 根据类和方法 调用并执行
 	ret := reflect.ValueOf(initStruct).MethodByName(RuqFnName).Call(inputs) //调用对应的方法
+
+	//反射Value 转string string 转[]bety []bety转结构体 结构体转json
 	resultStr := []byte(ret[0].String())
 	var returnRet interface{}
 	json.Unmarshal(resultStr, &returnRet)
-	//7 根据类型返回对应的结果
+	//9 根据类型返回对应的结果
 	c.JSON(200, gin.H{
 		"status":   "200",
 		"response": returnRet,
