@@ -16,8 +16,8 @@ func GetURLRoute() map[string]URLRouteOne {
 	}
 
 	ret["/hello"] = URLRouteOne{
-		URL:  "/hello",
-		Type: "post",
+		URL:  "/hello/:uid",
+		Type: "get",
 		Path: "User/HelloPost",
 	}
 

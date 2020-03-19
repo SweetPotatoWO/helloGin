@@ -3,6 +3,7 @@ package controller
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"reflect"
 	"strings"
 
@@ -46,8 +47,14 @@ func (cInit *InitController) SplitControllerAndFnName(controllerFnCode string) (
 
 //获取到每次传递过来的参数
 func (cInit *InitController) GetParams(c *gin.Context) (interface{}, error) {
-	var a map[string]interface{}
-	return a, nil
+	fmt.Println(c.Request)
+	var params map[string]interface{}
+	c.Request.ParseForm()
+	for k, v := range c.Request.PostForm {
+		fmt.Printf("k:%v\n", k)
+		fmt.Printf("v:%v\n", v)
+	}
+	return params, nil
 }
 
 //向注册表中注册函数  该方法会在子控制器中调用

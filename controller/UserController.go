@@ -13,3 +13,8 @@ type User struct{}
 func (u User) Hello(param interface{}) string {
 	return ReturnJsonSuccess("返回成功", "dafda")
 }
+
+//helloUser
+func (u User) HelloPost(param interface{}) string {
+	return ReturnJsonSuccess("返回成功", "nmzdsl")
+}

@@ -6,6 +6,7 @@ import (
 	"helloGin/controller"
 	"log"
 	"reflect"
+	"regexp"
 	"strings"
 	"sync"
 
@@ -75,19 +76,19 @@ func Run(c *gin.Context) {
 	//1 先获取到请求所传递过来的参数
 	param, err := cInitObj.GetParams(c)
 	if err != nil {
-		log.Fatalf("获取到参数错误", err)
+		log.Fatalf("获取到参数错误%v", err)
 	}
 
 	//2 执行整个控制器运行周期的before
 	isContinue := cInitObj.InitBeforeFn(param)
 	if !isContinue {
-		log.Fatalf("initBefore执行失败", err)
+		log.Fatalf("initBefore执行失败%v", err)
 	}
 	r := c.Request
 	ReqPath := r.URL.Path //当前请求的路径
 	var controllerFnCode string = ""
 	for rkey, rvalue := range RouteRegisterTable {
-		if rkey == ReqPath { //如果请求的路径相同
+		if matchReqUrl(ReqPath, rkey) { //如果请求的路径相同
 			controllerFnCode = rvalue
 			break
 		}
@@ -99,7 +100,7 @@ func Run(c *gin.Context) {
 	//3 对控制器的名字和方法名进行解析
 	controllerAndFnName, err := cInitObj.SplitControllerAndFnName(controllerFnCode)
 	if err != nil {
-		log.Fatalf("找不到控制器", err)
+		log.Fatalf("找不到控制器%v", err)
 	}
 	//获取到对应的控制器名字和方法名字
 	ControllerName := controllerAndFnName["controller"]
@@ -144,4 +145,39 @@ func Run(c *gin.Context) {
 	})
 	//反射映射实例话对应的类
 	cInitObj.InitAfterFn(param)
+}
+
+//链接的匹配度
+//匹配的规则,将链接用/分割成各个的小组
+//当存在: 通配符的链接则不进行匹配
+//全部匹配通过返回true 匹配不过返回flase
+
+func matchReqUrl(reqUrl string, registerUrl string) (flag bool) {
+	if reqUrl == "" || registerUrl == "" {
+		return false
+	}
+	reqUrlArr := strings.Split(reqUrl, "/")
+	registerUrlArr := strings.Split(registerUrl, "/")
+	if strings.Join(reqUrlArr, "") == strings.Join(registerUrlArr, "") {
+		return true
+	}
+	flag = true //默认
+	for key, regisv := range registerUrlArr {
+		if !matchChar(regisv) { //是通配符吗? 是
+			if regisv != reqUrlArr[key] {
+				flag = false
+			}
+		}
+	}
+	return flag
+}
+
+//正则匹配出:uid之类的通配符
+func matchChar(char string) (flag bool) {
+	flag = false
+	match, _ := regexp.MatchString(":(.*)", char)
+	if match {
+		flag = true
+	}
+	return flag
 }
